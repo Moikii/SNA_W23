@@ -83,3 +83,45 @@ def iom(selected_users, articles_per_user):
                 edge_weights[i, j] = len(common_articles)/min_artciels
 
     return edge_weights
+
+
+
+def comments_in_category_per_community(communities, filtered_df, percentage = False, weight_by_category_distribution = False):
+    tmp = filtered_df.groupby(['ID_CommunityIdentity','ArticleChannel'])['ID_CommunityIdentity'].size().reset_index(name='counts')
+    tmp = tmp.pivot(index = 'ID_CommunityIdentity', columns='ArticleChannel', values='counts')
+    tmp = tmp.fillna(0)
+
+    categories = filtered_df['ArticleChannel'].unique()
+    total_category_comments_percentage = filtered_df['ArticleChannel'].value_counts().div(len(filtered_df))
+
+
+    community_dfs = [tmp.loc[tmp.index.isin(community)] for community in communities]
+    community_comment_count_dfs = [community_df.sum() for community_df in community_dfs]
+    number_of_comments = [df.sum() for df in community_comment_count_dfs]
+
+    community_comment_count_dict = dict()
+    for category in categories:
+            for df in community_comment_count_dfs:
+                if category not in community_comment_count_dict.keys():
+                    community_comment_count_dict[category]= list()
+                community_comment_count_dict[category].append(df[category])
+
+    if weight_by_category_distribution:
+        for category in categories:
+                community_comment_count_dict[category] /= total_category_comments_percentage[category]
+
+        for i, community in enumerate(communities):
+            total = sum([community_comment_count_dict[category][i] for category in categories])
+            for category in categories:
+                community_comment_count_dict[category][i] /= total
+                community_comment_count_dict[category][i] *= number_of_comments[i]
+
+
+    if percentage:
+        for i, community in enumerate(communities):
+            total = sum([community_comment_count_dict[category][i] for category in categories])
+            for category in categories:
+                community_comment_count_dict[category][i] /=total
+ 
+    community_comment_distribution_df = pd.DataFrame(community_comment_count_dict)
+    return community_comment_distribution_df

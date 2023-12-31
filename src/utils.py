@@ -1,10 +1,11 @@
+import random
 import networkx as nx
 import numpy as np
 import pandas as pd
 from tqdm import tqdm
 
 
-def filter_users(df: pd.DataFrame, channels: list, min_articles=5):
+def filter_users(df: pd.DataFrame, channels: list, min_articles=5, max_num_users = np.inf):
     df = df[df['ArticleChannel'].isin(channels)]
 
     # Get unique articles per user
@@ -14,6 +15,7 @@ def filter_users(df: pd.DataFrame, channels: list, min_articles=5):
     articles_per_user = articles_per_user[articles_per_user.apply(
         len) > min_articles].apply(list)
     selected_users = articles_per_user.index.to_list()
+    selected_users = random.sample(selected_users, min(max_num_users, len(selected_users)))
     df = df[df['ID_CommunityIdentity'].isin(selected_users)]
 
     return df, articles_per_user, selected_users
@@ -125,3 +127,40 @@ def comments_in_category_per_community(communities, filtered_df, percentage = Fa
  
     community_comment_distribution_df = pd.DataFrame(community_comment_count_dict)
     return community_comment_distribution_df
+
+def merge_user_community(communities, filtered_df, community_column_name = 'Community_ID'): 
+    community_ids = []
+    community_indices = []
+
+    for i, community in enumerate(communities):
+        community_ids.extend(community)
+        community_indices.extend([i] * len(community))
+
+    df_community = pd.DataFrame({'ID': community_ids, community_column_name: community_indices})
+
+    df_community = df_community.merge(filtered_df, right_on='ID_CommunityIdentity', left_on='ID')
+    return df_community
+
+def plot_subtopics_per_community(communities, filtered_df, top_subgroups = 8):
+    community_column_name = 'temp_Community_ID'
+    x = merge_user_community(communities, filtered_df, community_column_name)
+    x = x.groupby([community_column_name])['ArticleRessortName'].value_counts().unstack()
+    x.fillna(0, inplace=True)
+    # only keep the 10 most common categories
+    selected_columns = x.sum().sort_values(ascending=False).index[:top_subgroups]
+    x['Other'] = x.sum(axis=1) - x[selected_columns].sum(axis=1)
+    selected_columns = selected_columns.append(pd.Index(['Other']))
+    x = x[selected_columns]
+    x = x.div(x.sum(axis=1), axis=0)
+    x.plot(kind='bar', stacked=True, colormap='Paired', xlabel='Community', ylabel='Category of comments (in %)').legend(bbox_to_anchor=(1.0, 1.0), fontsize='small')
+
+def plot_gender_per_community(communities, filtered_df): 
+    user_gender = merge_user_community(communities, filtered_df, 'greedy_modularity_communities')
+    user_gender = user_gender[['ID_CommunityIdentity', 'UserGender', 'greedy_modularity_communities']].drop_duplicates()
+    user_gender.fillna('u', inplace=True)
+    user_gender = user_gender.groupby(['greedy_modularity_communities', 'UserGender']).size().unstack()
+    user_gender.div(user_gender.sum(axis=1), axis=0).plot(kind='bar',
+                    stacked=True,
+                    colormap='Paired',
+                    xlabel='Community ',
+                    ylabel='Number of Users').legend(bbox_to_anchor=(1.0, 1.0), fontsize='small')

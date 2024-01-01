@@ -42,9 +42,9 @@ def build_graph(selected_users, edge_weights, threshold):
     return graph
 
 
-def load_data():
-    file_path = '../data/Postings_01052019_15052019.csv'
-    file_path2 = '../data/Postings_16052019_31052019.csv'
+def load_data(data_folder = "../data/"):
+    file_path = data_folder + 'Postings_01052019_15052019.csv'
+    file_path2 = data_folder + 'Postings_16052019_31052019.csv'
 
     df = pd.read_csv(file_path, sep=';', encoding='utf-8')
     df2 = pd.read_csv(file_path2, sep=';', encoding='utf-8')

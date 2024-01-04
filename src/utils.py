@@ -88,7 +88,7 @@ def iom(selected_users, articles_per_user):
 
 
 
-def comments_in_category_per_community(communities, filtered_df, percentage = False, weight_by_category_distribution = False):
+def comments_in_category_per_community(communities, filtered_df, percentage = False, weight_by_category_distribution = False, save_dir = None):
     tmp = filtered_df.groupby(['ID_CommunityIdentity','ArticleChannel'])['ID_CommunityIdentity'].size().reset_index(name='counts')
     tmp = tmp.pivot(index = 'ID_CommunityIdentity', columns='ArticleChannel', values='counts')
     tmp = tmp.fillna(0)
@@ -126,7 +126,19 @@ def comments_in_category_per_community(communities, filtered_df, percentage = Fa
                 community_comment_count_dict[category][i] /=total
  
     community_comment_distribution_df = pd.DataFrame(community_comment_count_dict)
-    return community_comment_distribution_df
+
+
+    plot = community_comment_distribution_df.plot(kind='bar',
+                                                  stacked=True,
+                                                  colormap='Paired',
+                                                  xlabel='Community ',
+                                                  ylabel='Comments').legend(bbox_to_anchor=(1.0, 1.0), fontsize='small')
+
+    if save_dir:
+        fig = plot.get_figure()
+        fig.savefig(save_dir)
+
+        
 
 def merge_user_community(communities, filtered_df, community_column_name = 'Community_ID'): 
     community_ids = []
@@ -141,7 +153,7 @@ def merge_user_community(communities, filtered_df, community_column_name = 'Comm
     df_community = df_community.merge(filtered_df, right_on='ID_CommunityIdentity', left_on='ID')
     return df_community
 
-def plot_subtopics_per_community(communities, filtered_df, top_subgroups = 8):
+def plot_subtopics_per_community(communities, filtered_df, top_subgroups = 8, save_dir = None):
     community_column_name = 'temp_Community_ID'
     x = merge_user_community(communities, filtered_df, community_column_name)
     x = x.groupby([community_column_name])['ArticleRessortName'].value_counts().unstack()
@@ -152,15 +164,23 @@ def plot_subtopics_per_community(communities, filtered_df, top_subgroups = 8):
     selected_columns = selected_columns.append(pd.Index(['Other']))
     x = x[selected_columns]
     x = x.div(x.sum(axis=1), axis=0)
-    x.plot(kind='bar', stacked=True, colormap='Paired', xlabel='Community', ylabel='Category of comments (in %)').legend(bbox_to_anchor=(1.0, 1.0), fontsize='small')
+    plot = x.plot(kind='bar', stacked=True, colormap='Paired', xlabel='Community', ylabel='Category of comments (in %)').legend(bbox_to_anchor=(1.0, 1.0), fontsize='small')
+    if save_dir:
+        fig = plot.get_figure()
+        fig.savefig(save_dir)
 
-def plot_gender_per_community(communities, filtered_df): 
+
+def plot_gender_per_community(communities, filtered_df, save_dir = None): 
     user_gender = merge_user_community(communities, filtered_df, 'greedy_modularity_communities')
     user_gender = user_gender[['ID_CommunityIdentity', 'UserGender', 'greedy_modularity_communities']].drop_duplicates()
     user_gender.fillna('u', inplace=True)
     user_gender = user_gender.groupby(['greedy_modularity_communities', 'UserGender']).size().unstack()
-    user_gender.div(user_gender.sum(axis=1), axis=0).plot(kind='bar',
-                    stacked=True,
-                    colormap='Paired',
-                    xlabel='Community ',
-                    ylabel='Number of Users').legend(bbox_to_anchor=(1.0, 1.0), fontsize='small')
+    plot = user_gender.div(user_gender.sum(axis=1), axis=0).plot(kind='bar',
+                           stacked=True,
+                           colormap='Paired',
+                           xlabel='Community ',
+                           ylabel='Number of Users (in %)').legend(bbox_to_anchor=(1.0, 1.0), fontsize='small')
+    
+    if save_dir:
+        fig = plot.get_figure()
+        fig.savefig(save_dir)

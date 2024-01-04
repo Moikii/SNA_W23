@@ -1,0 +1,142 @@
+<?xml version='1.0' encoding='utf-8'?>
+<gexf xmlns="http://www.gexf.net/1.2draft" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gexf.net/1.2draft http://www.gexf.net/1.2draft/gexf.xsd" version="1.2">
+  <meta lastmodifieddate="2023-12-30">
+    <creator>NetworkX 3.2.1</creator>
+  </meta>
+  <graph defaultedgetype="undirected" mode="static" name="">
+    <attributes mode="static" class="node">
+      <attribute id="0" title="category" type="string" />
+    </attributes>
+    <nodes>
+      <node id="23771" label="23771">
+        <attvalues>
+          <attvalue for="0" value="Karriere" />
+        </attvalues>
+      </node>
+      <node id="184470" label="184470">
+        <attvalues>
+          <attvalue for="0" value="Karriere" />
+        </attvalues>
+      </node>
+      <node id="220003" label="220003">
+        <attvalues>
+          <attvalue for="0" value="Karriere" />
+        </attvalues>
+      </node>
+      <node id="501428" label="501428">
+        <attvalues>
+          <attvalue for="0" value="Karriere" />
+        </attvalues>
+      </node>
+      <node id="515633" label="515633">
+        <attvalues>
+          <attvalue for="0" value="Karriere" />
+        </attvalues>
+      </node>
+      <node id="516173" label="516173">
+        <attvalues>
+          <attvalue for="0" value="Karriere" />
+        </attvalues>
+      </node>
+      <node id="531626" label="531626">
+        <attvalues>
+          <attvalue for="0" value="Familie" />
+        </attvalues>
+      </node>
+      <node id="552156" label="552156">
+        <attvalues>
+          <attvalue for="0" value="Karriere" />
+        </attvalues>
+      </node>
+      <node id="556513" label="556513">
+        <attvalues>
+          <attvalue for="0" value="Familie" />
+        </attvalues>
+      </node>
+      <node id="579582" label="579582">
+        <attvalues>
+          <attvalue for="0" value="Karriere" />
+        </attvalues>
+      </node>
+      <node id="632585" label="632585">
+        <attvalues>
+          <attvalue for="0" value="Karriere" />
+        </attvalues>
+      </node>
+      <node id="672163" label="672163">
+        <attvalues>
+          <attvalue for="0" value="Karriere" />
+        </attvalues>
+      </node>
+      <node id="675721" label="675721">
+        <attvalues>
+          <attvalue for="0" value="Karriere" />
+        </attvalues>
+      </node>
+      <node id="676452" label="676452">
+        <attvalues>
+          <attvalue for="0" value="Karriere" />
+        </attvalues>
+      </node>
+      <node id="686463" label="686463">
+        <attvalues>
+          <attvalue for="0" value="Karriere" />
+        </attvalues>
+      </node>
+      <node id="688877" label="688877">
+        <attvalues>
+          <attvalue for="0" value="Karriere" />
+        </attvalues>
+      </node>
+      <node id="689735" label="689735">
+        <attvalues>
+          <attvalue for="0" value="Familie" />
+        </attvalues>
+      </node>
+      <node id="108656" label="108656">
+        <attvalues>
+          <attvalue for="0" value="Familie" />
+        </attvalues>
+      </node>
+      <node id="172784" label="172784">
+        <attvalues>
+          <attvalue for="0" value="Familie" />
+        </attvalues>
+      </node>
+      <node id="667739" label="667739">
+        <attvalues>
+          <attvalue for="0" value="Karriere" />
+        </attvalues>
+      </node>
+    </nodes>
+    <edges>
+      <edge source="23771" target="184470" id="0" weight="0.75" />
+      <edge source="23771" target="220003" id="1" weight="1.0" />
+      <edge source="23771" target="501428" id="2" weight="0.7" />
+      <edge source="23771" target="515633" id="3" weight="0.5714285714285714" />
+      <edge source="23771" target="516173" id="4" weight="0.6" />
+      <edge source="23771" target="531626" id="5" weight="0.6666666666666666" />
+      <edge source="23771" target="552156" id="6" weight="0.6666666666666666" />
+      <edge source="23771" target="556513" id="7" weight="0.5714285714285714" />
+      <edge source="23771" target="579582" id="8" weight="1.0" />
+      <edge source="23771" target="632585" id="9" weight="0.6666666666666666" />
+      <edge source="23771" target="672163" id="10" weight="0.8333333333333334" />
+      <edge source="23771" target="675721" id="11" weight="0.8333333333333334" />
+      <edge source="23771" target="676452" id="12" weight="0.7142857142857143" />
+      <edge source="23771" target="686463" id="13" weight="0.75" />
+      <edge source="23771" target="688877" id="14" weight="0.7142857142857143" />
+      <edge source="23771" target="689735" id="15" weight="0.5714285714285714" />
+      <edge source="501428" target="552156" id="16" weight="0.6666666666666666" />
+      <edge source="515633" target="172784" id="17" weight="0.6666666666666666" />
+      <edge source="515633" target="556513" id="18" weight="0.7142857142857143" />
+      <edge source="515633" target="686463" id="19" weight="0.75" />
+      <edge source="516173" target="108656" id="20" weight="0.5714285714285714" />
+      <edge source="516173" target="676452" id="21" weight="0.5714285714285714" />
+      <edge source="516173" target="689735" id="22" weight="0.5714285714285714" />
+      <edge source="531626" target="108656" id="23" weight="0.6666666666666666" />
+      <edge source="556513" target="172784" id="24" weight="0.6666666666666666" />
+      <edge source="556513" target="686463" id="25" weight="0.5714285714285714" />
+      <edge source="172784" target="667739" id="26" weight="0.6666666666666666" />
+    </edges>
+  </graph>
+</gexf>

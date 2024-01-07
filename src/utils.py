@@ -136,6 +136,7 @@ def comments_in_category_per_community(communities, filtered_df, percentage = Fa
 
     if save_dir:
         fig = plot.get_figure()
+        fig.tight_layout()
         fig.savefig(save_dir)
 
         
@@ -167,6 +168,7 @@ def plot_subtopics_per_community(communities, filtered_df, top_subgroups = 8, sa
     plot = x.plot(kind='bar', stacked=True, colormap='Paired', xlabel='Community', ylabel='Category of comments (in %)').legend(bbox_to_anchor=(1.0, 1.0), fontsize='small')
     if save_dir:
         fig = plot.get_figure()
+        fig.tight_layout()
         fig.savefig(save_dir)
 
 
@@ -183,4 +185,5 @@ def plot_gender_per_community(communities, filtered_df, save_dir = None):
     
     if save_dir:
         fig = plot.get_figure()
+        fig.tight_layout()
         fig.savefig(save_dir)

@@ -16,6 +16,7 @@ kiwisolver==1.4.5
 matplotlib==3.8.2
 matplotlib-inline==0.1.6
 nest-asyncio==1.5.8
+networkx==3.2.1
 numpy==1.26.2
 packaging==23.2
 pandas==2.1.3
